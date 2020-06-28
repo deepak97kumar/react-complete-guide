@@ -17,13 +17,15 @@ import Person from '../Persons/Person/Person';
 // We can even omit the pranthsis as we are writing the javascript only not the JSX. though 
 // map mathod return the JSX.
 
-const persons = (props) => props.allPersons.map((p, i) => {
+const persons = (props) => {
+  console.log('Persons.js rendering...  Component Lifecycle stage4-render children')
+  return props.allPersons.map((p, i) => {
     return <Person 
     Name={p.Name} 
     Age={p.Age}
     click={props.clicked.bind(this, i)}
     key={p.id}
     changed={(event, id) => props.changed(event, p.id)} />
-  });
+  })};
 
 export default persons;
