@@ -1,22 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Person from '../Persons/Person/Person';
 
-// in ES6 if we start pranthsis just after arrow, we  can omit the return statment as whatever we write
-//  after pranthasis function will return it.(The commented code)
-// const persons = (props) => (  
-//     props.allPersons.map((p, i) => {
-//       return <Person 
-//       Name={p.Name} 
-//       Age={p.Age}
-//       click={this.removePerson.bind(this, i)}
-//       key={p.id}
-//       nameChanged={(event, id) => this.nameChangedHandler(event, p.id)} />
-//     }) 
-// )
-
-// We can even omit the pranthsis as we are writing the javascript only not the JSX. though 
-// map mathod return the JSX.
-
+/*
+// functional component
 const persons = (props) => {
   console.log('Persons.js rendering...  Component Lifecycle stage4-render children')
   return props.allPersons.map((p, i) => {
@@ -28,4 +14,41 @@ const persons = (props) => {
     changed={(event, id) => props.changed(event, p.id)} />
   })};
 
-export default persons;
+export default persons;*/
+
+// class beased component
+
+class Persons extends Component {
+  static getDerivedStateFromProps(state, props){
+    console.log("[Persons.js]  getDerivedStateFromProps");
+    return state;
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    console.log("[Persons.js] shouldComponentUpdate")
+    return true;
+  }
+
+  getSnapshotBeforeUpdate(prevProps, prevState){
+    console.log("[Persons.js] getSnapshotBeforeUpdate");
+  }
+  render() {
+    console.log('Persons.js rendering...  Component Lifecycle stage4-render children')
+    return this.props.allPersons.map((p, i) => {
+      return (
+        <Person
+          Name={p.Name}
+          Age={p.Age}
+          click={this.props.clicked.bind(this, i)}
+          key={p.id}
+          changed={(event, id) => this.props.changed(event, p.id)} />);
+    });
+  }
+
+  componentDidUpdate(){
+    console.log("[Persons.js] componentDidUpdate");
+  }
+}
+
+
+export default Persons
